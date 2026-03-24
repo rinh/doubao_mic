@@ -1,0 +1,24 @@
+# macOS / Finder
+.DS_Store
+
+# Local tool config
+.claude/settings.local.json
+
+# Local credentials
+~/.voiceinput/
+**/ak.yaml
+# Private reference docs (not part of OSS release)
+docs/
+docs/*
+
+# Xcode user-specific state
+*.xcuserstate
+*.xcuserdata/
+xcuserdata/
+
+# Coverage / profiling artifacts
+*.profraw
+default.profraw
+
+# Local signing override (kept on developer machine)
+doubao_mic/Signing.local.xcconfig

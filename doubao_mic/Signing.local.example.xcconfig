@@ -1,0 +1,6 @@
+// Copy this file to Signing.local.xcconfig and fill your local values.
+// This file is intentionally not committed.
+
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = Apple Development

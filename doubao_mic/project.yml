@@ -1,0 +1,84 @@
+name: VoiceInput
+options:
+  bundleIdPrefix: com.voiceinput
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    PRODUCT_NAME: VoiceInput
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_IDENTITY: "Apple Development"
+    CODE_SIGN_STYLE: Automatic
+
+schemes:
+  VoiceInput:
+    build:
+      targets:
+        VoiceInput: all
+    test:
+      targets:
+        - VoiceInputTests
+        - VoiceInputUITests
+
+targets:
+  VoiceInput:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources
+        excludes:
+          - Hotkey/KeyRecorderView.swift
+    settings:
+      base:
+        INFOPLIST_FILE: Sources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.voiceinput.app
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_ENTITLEMENTS: Sources/VoiceInput.entitlements
+    entitlements:
+      path: Sources/VoiceInput.entitlements
+
+  VoiceInputTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+        excludes:
+          - ASRIntegrationTests.swift
+    dependencies:
+      - target: VoiceInput
+        embed: false
+        codeSign: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.voiceinput.app.tests
+        PRODUCT_NAME: VoiceInputTests
+        INFOPLIST_FILE: Sources/TestsInfo.plist
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/VoiceInput.app/Contents/MacOS/VoiceInput"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        SKIP_INSTALL: YES
+
+  VoiceInputUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - path: UITests
+      - path: Tests/Fixtures/waveform_fixture.wav
+        buildPhase: resources
+    dependencies:
+      - target: VoiceInput
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.voiceinput.app.uitests
+        PRODUCT_NAME: VoiceInputUITests
+        INFOPLIST_FILE: Sources/UITestsInfo.plist
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks"
+        TEST_TARGET_NAME: VoiceInput
+        SKIP_INSTALL: YES
