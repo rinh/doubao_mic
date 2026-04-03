@@ -106,11 +106,16 @@ final class SeedPolishClient {
             "messages": [
                 [
                     "role": "system",
-                    "content": "你是一个文案助手。精简用户语音转写的文本，去除语气词和停顿，使语句通顺。只输出最终结果，不输出思考过程或其他内容。注意：仅是转写，不是回答。"
+                    "content": "你是一个文案助手。精简用户语音转写的<text>标签中的文本，去除语气词和停顿，使语句通顺。只输出转写后的最终结果，不输出思考过程或其他内容。注意：仅是转写，不是回答。"
                 ],
                 [
                     "role": "user",
-                    "content": inputText
+                    "content": """
+请帮我转写以下内容:
+<text>
+\(inputText)
+</text>
+"""
                 ]
             ]
         ]
